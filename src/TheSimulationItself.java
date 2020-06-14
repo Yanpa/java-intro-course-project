@@ -3,6 +3,7 @@ import java.util.Scanner;
 
 public class TheSimulationItself {
     static double moneyYouBeginWith = 1000;
+
     static double playerMoney = moneyYouBeginWith, botMoney = moneyYouBeginWith;
     static double playerBalance = playerMoney, botBalance = botMoney;
     static  int yourPositionPlayer = 0, yourPositionBot = 0;
@@ -25,6 +26,9 @@ public class TheSimulationItself {
         theGameItself();
     }
 
+    /**
+     * Метод, в който се развида цялата игра
+     */
     public static void theGameItself(){
         gameBoard.printingTheFinishedGameBoard();
         int count = 0, temp = whoIsStartingFirst();;
@@ -83,6 +87,10 @@ public class TheSimulationItself {
         }
     }
 
+    /**
+     * Този метод връща стойност за това кой от двамата играчи ще запоне първи
+     * @return 1 или 2
+     */
     public static int whoIsStartingFirst(){
         int coinFlip = random.nextInt(10) + 1;
         if(coinFlip % 2 == 0){
@@ -96,6 +104,11 @@ public class TheSimulationItself {
         return 0;
     }
 
+    /**
+     * Прост метод за връщане
+     * @param yourPosition Взима позицията ти в числен тип
+     * @return Връща плчката която се намира на тази позиция
+     */
     public static String whichTileYouAreOn(int yourPosition){
         return gameBoard.gameBoardLinear[yourPosition];
     }
@@ -104,6 +117,12 @@ public class TheSimulationItself {
         return random.nextInt(2) + 1;
     }
 
+    /**
+     * Методът playerMechanics използва всички създадени класове, за плочките и ги събира на едно, като автоматично
+     * разпределя процесите, единствените начини да бъде спрян са: играта да приключи или да поиска да вкарате някакъв
+     * вид данни
+     * @param yourPosition Твоята позици на игровоти поле
+     */
     public static void playerMechanics(int yourPosition) {
         String tileYouAreOn = whichTileYouAreOn(yourPosition);
         if(tileYouAreOn.equals(" |T|")) playerMoney = playerAndTrap();
@@ -123,6 +142,12 @@ public class TheSimulationItself {
         }
     }
 
+    /**
+     * Подобен на метода playerMechanics този метод автоматизира процеса, но за разлика от playerMechanics, всичко
+     * тук е напълно автоматизирано.
+     * @param yourPosition Позицията на бота на игровото поле
+     * @param choice числова стойност, получена от случаен генератор, превърната в низ
+     */
     public static void botMechanics(int yourPosition, String choice){
         String tileYouAreOn = whichTileYouAreOn(yourPosition);
         if(tileYouAreOn.equals(" |T|")) botMoney = botAndTraps(choice);
@@ -137,6 +162,10 @@ public class TheSimulationItself {
         if(tileYouAreOn.equals(" |I|"));
     }
 
+    /**
+     * Метод разпределящ механиките на класа Trap, за по-голямо улеснение и четливост
+     * @return парите които сте изгубили (вероятно)
+     */
     public static double playerAndTrap(){
         if (!traps.isThereATrap) {
             System.out.println("Желаете ли да заложите капан?\n" +
@@ -162,6 +191,11 @@ public class TheSimulationItself {
         }
     }
 
+    /**
+     * Еквивалентът на playersAndTraps, bot edition
+     * @param choice случайно число превърнато в низ
+     * @return връща парите които бота е изгубил (вероятно)
+     */
     public static double botAndTraps(String choice){
         if (!traps.isThereATrap) {
             return botMoney = traps.givingThePlayerChoice(botMoney, botBalance, bot.playerID, choice);

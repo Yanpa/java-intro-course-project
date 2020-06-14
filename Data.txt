@@ -5,3 +5,4 @@ invest=3
 partyHard=3
 chance=3
 steal=3
+money = 1000
