@@ -1,0 +1,7 @@
+height=4
+width=8
+trap=7
+invest=3
+partyHard=3
+chance=3
+steal=3
